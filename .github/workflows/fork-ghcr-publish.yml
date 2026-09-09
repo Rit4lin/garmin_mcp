@@ -51,7 +51,7 @@ jobs:
         run: uv run pytest tests/integration tests/unit -q
 
   publish:
-    name: Construir y publicar GHCR
+    name: Construir y publicar GHCR (amd64)
     needs: test
     if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/v')
     runs-on: ubuntu-latest
@@ -59,9 +59,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
-      - name: Configurar QEMU
-        uses: docker/setup-qemu-action@v3
 
       - name: Configurar Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -95,7 +92,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: .
-          platforms: linux/amd64,linux/arm64
+          platforms: linux/amd64
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
