@@ -1,6 +1,9 @@
 name: Publicar imagen Docker en GHCR
 
 on:
+  pull_request:
+    branches:
+      - main
   push:
     branches:
       - main
